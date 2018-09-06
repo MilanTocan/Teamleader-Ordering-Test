@@ -1,0 +1,76 @@
+﻿@model Ordering.ViewModels.OrderDetailEditViewModel
+
+@{
+    Layout = null;
+}
+
+@foreach (KeyValuePair<string, decimal> price in Model.Prices)
+{
+    @Html.Hidden(price.Key, price.Value)
+}
+
+@for (int i = 0; i < Model.OrderDetail.Count; i++)
+{
+    <div class="row">
+        <div id="product[@i]" class="form-group col-12">
+            @Html.Label("Model.OrderDetails[" + i + "].productId", "Order nr " + (i + 1), htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3 text-center">
+                @Html.DropDownListFor(
+                    model => model.OrderDetail[i].ProductId,
+                    new SelectList(Model.Products, "Value", "Text", Model.OrderDetail[i].ProductId),
+                    new {
+                        @class = "form-control",
+                        @data_product = "OrderDetail[" + i + "].ProductId",
+                        @data_quantity = "OrderDetail[" + i + "].Quantity",
+                        @data_detailid = "OrderDetail[" + i + "].ID",
+                        @data_url = Url.Action("UpdateOrderDetail", "Orders")
+                    }
+                )
+                @Html.HiddenFor(model => model.OrderDetail[i].ID)
+                @Html.HiddenFor(model => model.OrderDetail[i].OrderId)
+            </div>
+            @Html.LabelFor(model => model.OrderDetail[i].Quantity, htmlAttributes: new { @class = "control-label col-md-1" })
+            @Html.ValidationMessageFor(model => model.OrderDetail[i].Quantity, "", new { @class = "text-danger" })
+            <div class="col-md-2">
+                @Html.EditorFor(
+                    model => model.OrderDetail[i].Quantity,
+                    new { htmlAttributes = new {
+                        @class = "form-control",
+                        @data_product = "OrderDetail[" + i + "].ProductId",
+                        @data_quantity = "OrderDetail[" + i + "].Quantity",
+                        @data_detailid = "OrderDetail[" + i + "].ID",
+                        @data_url = Url.Action("UpdateOrderDetail", "Orders")
+                    }
+                    })
+            </div>
+
+            @Html.Label("Unit Price", htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2 text-center">
+                <label class="control-label" name="unitPrice[@i]">0</label>
+            </div>
+
+            <div class="col-md-1">
+                <span id="Remove[@i]" class="btn btn-danger" data-url="@Url.Action("RemoveOrderDetails", "Orders")" data-orderid="@Model.ID" data-removeid="@i">
+                    Remove
+                </span>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="form-group">
+    <div class="col-md-11">&nbsp;</div>
+    <div class="col-md-1">
+        <span id="AddOrderDetail" class="btn btn-success" data-url="@Url.Action("AddOrderDetails", "Orders")" data-orderid="@Model.ID">
+            Add Product
+        </span>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+    </div>
+</div>

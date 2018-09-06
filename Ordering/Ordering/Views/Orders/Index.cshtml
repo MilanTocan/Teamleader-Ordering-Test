@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Ordering.Models.Order>
+
+<h2>Orders</h2>
+
+<table id="OrderList" class="table" data-url="@Url.Action("OrderList", "Orders")">
+    @{ Html.RenderAction("OrderList", "Orders"); }
+</table>
+
+<div id="partialView" class="container-fluid"></div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/app.js")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+}

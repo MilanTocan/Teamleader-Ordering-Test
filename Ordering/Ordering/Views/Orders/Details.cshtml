@@ -1,0 +1,57 @@
+﻿@model Ordering.Models.Order
+
+@{
+    Layout = null;
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Name)
+        </dd>
+
+        @foreach (var detail in Model.OrderDetail)
+        {
+            <dt>&nbsp;</dt>
+            <dd>&nbsp;</dd>
+            <dt>
+                @Html.DisplayNameFor(model => detail.Product.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => detail.Product.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => detail.Product.Price)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => detail.Product.Price)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => detail.Quantity)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => detail.Quantity)
+            </dd>
+        }
+
+        <dt>&nbsp;</dt>
+        <dd>&nbsp;</dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+    </dl>
+</div>

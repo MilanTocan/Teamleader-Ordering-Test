@@ -1,0 +1,31 @@
+﻿@model Ordering.ViewModels.OrderDetailEditViewModel
+
+@{
+    Layout = null;
+}
+
+<h2>Edit Order</h2>
+<span id="updateState" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div id="editForm" class="form-horizontal" data-url="@Url.Action("UpdateChanges", "Orders")">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerId, null, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="orderDetails">
+            @{ Html.RenderAction("GetOrderDetails", "Orders", new { OrderID = Model.ID }); }
+        </div>
+    </div>
+}

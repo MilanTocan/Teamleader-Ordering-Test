@@ -15,3 +15,4 @@ Once this is done you use the `Update-Database` command in the Package Manager C
 - Use of the ValidationToken (even with Ajax calls)
 - Use of the repository pattern
 - Use of Data Attributes
+- CSS Animations
